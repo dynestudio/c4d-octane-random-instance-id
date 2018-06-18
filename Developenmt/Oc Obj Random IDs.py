@@ -1,3 +1,9 @@
+"""
+
+v03
+
+"""
+
 import c4d, random
 from random import randint
 
@@ -9,7 +15,6 @@ from random import randint
 -Iteracion de objetos correcta.
 
 """
-
 
 OCTANE_TAG_ID = 000000000
 
@@ -45,11 +50,23 @@ def main():
         if tag_max_value < tag[c4d.COMPOSITINGTAG_IDCHN0]:
             tag_max_value = tag[c4d.COMPOSITINGTAG_IDCHN0]
 
+    # if octane tag ID is 0, max value will be the len list
+    if tag_max_value == 0:
+    	tag_max_value = len(obj_octaneTag)
+
     for tag in obj_octaneTag:
         tag[c4d.COMPOSITINGTAG_IDCHN0] = randint(0, tag_max_value)
 
     print 'Octane tags updated: ' + str(len(obj_octaneTag))
     print 'Octane tag maximun interation value: ' + str(tag_max_value)
+
+    tag_max_value_toMaterial = 0
+
+    for tag in obj_octaneTag:
+    	if tag_max_value_toMaterial < tag[c4d.COMPOSITINGTAG_IDCHN0]:
+            tag_max_value_toMaterial = tag[c4d.COMPOSITINGTAG_IDCHN0]
+
+    print 'Octane tag maximun iteration for material: ' + str(tag_max_value_toMaterial)
 
     # deselect all scene objs
     c4d.CallCommand(12113, 12113) # Deselect All

@@ -17,7 +17,6 @@ from random import randint
 """
 
 OCTANE_TAG_ID = 1029603
-instance_ID = [c4d.OBJECTTAG_INSTANCE_ID]
 
 
 def get_actObjs():
@@ -43,14 +42,14 @@ def main():
         obj_tags = obj.GetTags()
 
         for tag in obj_tags:
-            if tag.GetType() == c4d.Tcompositing: # tag operations
+            if tag.GetType() == OCTANE_TAG_ID: # tag operations
                 obj_octaneTag.append(tag)
 
     tag_max_value = 0
 
     for tag in obj_octaneTag:
-        if tag_max_value < tag[c4d.COMPOSITINGTAG_IDCHN0]:
-            tag_max_value = tag[c4d.COMPOSITINGTAG_IDCHN0]
+        if tag_max_value < tag[c4d.OBJECTTAG_INSTANCE_ID]:
+            tag_max_value = tag[c4d.OBJECTTAG_INSTANCE_ID]
 
     # if octane tag ID is 0, max value will be the len list
     if tag_max_value == 0:
@@ -65,8 +64,8 @@ def main():
     tag_max_value_toMaterial = 0
 
     for tag in obj_octaneTag:
-    	if tag_max_value_toMaterial < tag[c4d.COMPOSITINGTAG_IDCHN0]:
-            tag_max_value_toMaterial = tag[c4d.COMPOSITINGTAG_IDCHN0]
+    	if tag_max_value_toMaterial < tag[c4d.OBJECTTAG_INSTANCE_ID]:
+            tag_max_value_toMaterial = tag[c4d.OBJECTTAG_INSTANCE_ID]
 
     print 'Octane tag maximun iteration for material: ' + str(tag_max_value_toMaterial)
 

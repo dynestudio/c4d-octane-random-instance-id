@@ -5,12 +5,11 @@ v03
 """
 
 import c4d, random
-from random import randint
+from random import randint ; from c4d import gui
 
 """Pendings:
 
 -Support for UnDo y Redo
--revisar el funcionamiento con los octane tags.
 -Que soporte childs y seleccione todo.
 -Iteracion de objetos correcta.
 
@@ -28,9 +27,6 @@ def get_actObjs():
     return activeObjects
 
 def main():
-    #get all scene objects
-    c4d.CallCommand(12112, 12112) # Select All
-
     activeObjects = get_actObjs()
     if not activeObjects:
         return
@@ -53,10 +49,10 @@ def main():
 
     # if octane tag ID is 0, max value will be the len list
     if tag_max_value == 0:
-    	tag_max_value = len(obj_octaneTag)
+        tag_max_value = len(obj_octaneTag)
 
     for tag in obj_octaneTag:
-        tag[c4d.COMPOSITINGTAG_IDCHN0] = randint(0, tag_max_value)
+        tag[c4d.OBJECTTAG_INSTANCE_ID] = randint(0, tag_max_value)
 
     print 'Octane tags updated: ' + str(len(obj_octaneTag))
     print 'Octane tag maximun interation value: ' + str(tag_max_value)
@@ -64,7 +60,7 @@ def main():
     tag_max_value_toMaterial = 0
 
     for tag in obj_octaneTag:
-    	if tag_max_value_toMaterial < tag[c4d.OBJECTTAG_INSTANCE_ID]:
+        if tag_max_value_toMaterial < tag[c4d.OBJECTTAG_INSTANCE_ID]:
             tag_max_value_toMaterial = tag[c4d.OBJECTTAG_INSTANCE_ID]
 
     print 'Octane tag maximun iteration for material: ' + str(tag_max_value_toMaterial)

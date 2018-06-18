@@ -16,7 +16,9 @@ from random import randint
 
 """
 
-OCTANE_TAG_ID = 000000000
+OCTANE_TAG_ID = 1029603
+instance_ID = [c4d.OBJECTTAG_INSTANCE_ID]
+
 
 def get_actObjs():
     #get active objects

@@ -10,34 +10,39 @@ from random import randint ; from c4d import gui
 """Pendings:
 
 -Support for UnDo y Redo
--Que soporte childs y seleccione todo.
--Iteracion de objetos correcta.
+-disclaimer correcto
 
 """
 
 OCTANE_TAG_ID = 1029603
+  
+def get_allObjs():
+    def GetNextObject(op): # object manager iteration
+        if not op: return None
+        if op.GetDown(): return op.GetDown()
+        while not op.GetNext() and op.GetUp(): op = op.GetUp()
+        return op.GetNext()
 
-def get_actObjs():
-    #get active objects
-    activeObjects = doc.GetActiveObjects(c4d.GETACTIVEOBJECTFLAGS_CHILDREN)
-    if not activeObjects:
-        gui.MessageDialog('Please select one or more objects.')
+    # get first obj
+    first_obj = doc.GetFirstObject()
+    if not first_obj:
         return None
-    return activeObjects
+    # list of all objects in the scene
+    list_objs = []
+    # add the first obj
+    list_objs.append(first_obj) 
 
-def get_all_objects(op, filter, output):  #get all objects from each type
-    while op:
-        if filter(op):
-            output.append(op)
-        get_all_objects(op.GetDown(), filter, output)
-        op = op.GetNext()
-    return output
+    # obj loop iteration
+    while first_obj:          
+        first_obj = GetNextObject(first_obj)
+        if first_obj:
+            list_objs.append(first_obj)
+
+    return list_objs
 
 def main():
-
-    aovs = get_all_objects(doc.GetFirstObject(), lambda x: x.CheckType(ARNOLD_AOV), []) # get all cameras from the scene
     
-    activeObjects = get_actObjs()
+    activeObjects = get_allObjs()
     if not activeObjects:
         return
 

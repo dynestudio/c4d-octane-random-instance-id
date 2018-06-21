@@ -1,6 +1,6 @@
 """
 
-v04
+v05
 
 """
 
@@ -41,11 +41,10 @@ def get_allObjs():
     return list_objs
 
 def main():
-    
+    # get obj list
     activeObjects = get_allObjs()
     if not activeObjects:
         return
-
     # octane tags list
     obj_octaneTag = []
 
@@ -80,10 +79,7 @@ def main():
 
     print 'Octane tag maximun iteration for material: ' + str(tag_max_value_toMaterial)
 
-    # deselect all scene objs
-    c4d.CallCommand(12113, 12113) # Deselect All
-
-    c4d.EventAdd()
+    c4d.EventAdd() # update scene
 
 if __name__=='__main__':
     main()
